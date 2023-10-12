@@ -5,6 +5,8 @@ export const UsersContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  max-width: calc((380px + 20px) * 3);
+  margin: 0 auto;
 `;
 
 export const Button = styled.button`
