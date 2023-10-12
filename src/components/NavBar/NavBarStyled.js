@@ -19,6 +19,13 @@ export const NavItem = styled.li`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+
   color: rgba(235, 216, 255, 1);
 
   &:hover {
