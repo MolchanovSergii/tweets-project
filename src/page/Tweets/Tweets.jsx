@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { fetchUsers } from 'api/api';
 
 import UserCard from 'components/UserCard/UserCard';
-import { Button, UsersContainer } from './TweetsStyled';
+import { Button, UsersContainer, StyledLink } from './TweetsStyled';
 
 const Tweets = () => {
   const [users, setUsers] = useState([]);
@@ -25,7 +24,7 @@ const Tweets = () => {
 
   return (
     <>
-      <Link to="/">Back</Link>
+      <StyledLink to="/">BACK</StyledLink>
       <UsersContainer>
         {users.map(user => (
           <UserCard key={user.id} user={user} />
@@ -34,7 +33,7 @@ const Tweets = () => {
       <Button onClick={() => setPage(prevPage => prevPage + 1)}>
         LOAD MORE
       </Button>
-      <Link to="/">Back</Link>
+      <StyledLink to="/">BACK</StyledLink>
     </>
   );
 };
