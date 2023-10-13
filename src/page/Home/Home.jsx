@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <HomePageContainer>
-        <HomePageTitle>Welcome to our Twitter Clone!</HomePageTitle>
+        <HomePageTitle>Welcome to my Twitter Clone!</HomePageTitle>
         <HomePageDescription>
           Discover tweets from users all around the globe. Navigate to the
           Tweets page to see more.
