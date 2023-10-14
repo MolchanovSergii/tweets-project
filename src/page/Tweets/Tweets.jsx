@@ -1,21 +1,44 @@
 import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
 import { fetchUsers } from 'api/api';
 
-import UserCard from 'components/UserCard/UserCard';
-import Loader from 'components/Loader/Loader';
-import { Button, UsersContainer, StyledLink, Select } from './TweetsStyled';
 import { filtredUsersByStatus } from 'utils/filtredUsersByStatus';
 
+import UserCard from 'components/UserCard/UserCard';
+import Loader from 'components/Loader/Loader';
+
+import { Button, UsersContainer, StyledLink } from './TweetsStyled';
+import { selectStyles } from './SelectStyled';
+
 const Tweets = () => {
+  const filterOptions = [
+    { value: 'all', label: 'SHOW ALL' },
+    { value: 'follow', label: 'FOLLOW' },
+    { value: 'following', label: 'FOLLOWING' },
+  ];
+
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('all');
   const [userStatus, setUserStatus] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(filterOptions[0]);
 
-  const handleFilterChange = e => {
-    setFilter(e.target.value);
+  const handleFilterChange = option => {
+    setSelectedOption(option);
+    setFilter(option.value);
+  };
+
+  const loadMoreUsers = () => {
+    const cardHeight = 460;
+    const cardsToAdd = 6;
+
+    setPage(prevPage => prevPage + 1);
+
+    setTimeout(() => {
+      window.scrollBy(0, cardHeight * cardsToAdd);
+    }, 500);
   };
 
   useEffect(() => {
@@ -53,24 +76,23 @@ const Tweets = () => {
       ) : (
         <>
           <StyledLink to="/">BACK</StyledLink>
-          <Select onChange={handleFilterChange}>
-            <option value="all">SHOW ALL</option>
-            <option value="follow">FOLLOW</option>
-            <option value="following">FOLLOWING</option>
-          </Select>
+          <Select
+            value={selectedOption}
+            onChange={handleFilterChange}
+            options={filterOptions}
+            styles={selectStyles}
+          ></Select>
           <UsersContainer>
             {filteredUsers.map(user => (
               <UserCard
                 key={user.id}
                 user={user}
-                users={userStatus}
-                setUserStatus={setUserStatus}
+                userStatus={userStatus}
+                setUsers={setUsers}
               />
             ))}
           </UsersContainer>
-          <Button onClick={() => setPage(prevPage => prevPage + 1)}>
-            LOAD MORE
-          </Button>
+          <Button onClick={loadMoreUsers}>LOAD MORE</Button>
           <StyledLink to="/">BACK</StyledLink>
         </>
       )}
