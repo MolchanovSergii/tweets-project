@@ -64,7 +64,6 @@ export const Select = styled.select`
   display: block;
   width: 196px;
   height: 50px;
-  /* padding: 14px 28px; */
   padding-left: 14px;
   margin: 20px auto;
   border: none;
@@ -81,10 +80,6 @@ export const Select = styled.select`
   line-height: 22px;
   letter-spacing: 0em;
   background: rgba(235, 216, 255, 1);
-
-  /* &:hover {
-    background-color: rgba(92, 211, 168, 1);
-  } */
 
   &:focus {
     outline: none;

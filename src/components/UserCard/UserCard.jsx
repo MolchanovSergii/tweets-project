@@ -14,47 +14,32 @@ import {
 import logo from '../../images/Logo.png';
 import backgroundImage from '../../images/background_image.png';
 
+import {
+  getFromLocalStorage,
+  setToLocalStorage,
+} from 'components/helpers/helpers';
+
 const UserCard = ({ user }) => {
-  const initialIsFollowing = () => {
-    const savedStatus = localStorage.getItem(`isFollowing_${user.id}`);
-    return savedStatus ? JSON.parse(savedStatus) : false;
-  };
-
-  const initialFollowersCount = () => {
-    const savedCount = localStorage.getItem(`followersCount_${user.id}`);
-    return savedCount ? parseInt(savedCount, 10) : user.followers;
-  };
-
-  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
-  const [followersCount, setFollowersCount] = useState(initialFollowersCount);
+  const [isFollowing, setIsFollowing] = useState(
+    getFromLocalStorage(`isFollowing_${user.id}`, false)
+  );
+  const [followersCount, setFollowersCount] = useState(
+    getFromLocalStorage(`followersCount_${user.id}`, user.followers)
+  );
 
   useEffect(() => {
-    const savedFollowingStatus = localStorage.getItem(`isFollowing_${user.id}`);
-    const savedFollowersCount = localStorage.getItem(
-      `followersCount_${user.id}`
-    );
-
-    if (savedFollowingStatus) {
-      setIsFollowing(JSON.parse(savedFollowingStatus));
-    }
-
-    if (savedFollowersCount) {
-      setFollowersCount(parseInt(savedFollowersCount, 10));
-    }
-  }, [user.id]);
-
-  useEffect(() => {
-    localStorage.setItem(`isFollowing_${user.id}`, JSON.stringify(isFollowing));
-    localStorage.setItem(
-      `followersCount_${user.id}`,
-      followersCount.toString()
-    );
+    setToLocalStorage(`isFollowing_${user.id}`, isFollowing);
+    setToLocalStorage(`followersCount_${user.id}`, followersCount);
   }, [isFollowing, followersCount, user.id]);
 
   const handleFollowClick = () => {
-    setIsFollowing(!isFollowing);
-    setFollowersCount(isFollowing ? followersCount - 1 : followersCount + 1);
+    setIsFollowing(prev => !prev);
+    setFollowersCount(prev => (isFollowing ? prev - 1 : prev + 1));
   };
+
+  const buttonColor = isFollowing
+    ? 'rgba(92, 211, 168, 1)'
+    : 'rgba(235, 216, 255, 1)';
 
   return (
     <CardContainer>
@@ -71,11 +56,7 @@ const UserCard = ({ user }) => {
         </UserCounts>
         <Button
           onClick={handleFollowClick}
-          style={{
-            backgroundColor: !isFollowing
-              ? ' rgba(235, 216, 255, 1)'
-              : ' rgba(92, 211, 168, 1)',
-          }}
+          style={{ backgroundColor: buttonColor }}
         >
           {isFollowing ? 'FOLLOWING' : 'FOLLOW'}
         </Button>

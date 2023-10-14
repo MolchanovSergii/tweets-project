@@ -5,6 +5,7 @@ import { fetchUsers } from 'api/api';
 import UserCard from 'components/UserCard/UserCard';
 import Loader from 'components/Loader/Loader';
 import { Button, UsersContainer, StyledLink, Select } from './TweetsStyled';
+import { filtredUsersByStatus } from 'utils/filtredUsersByStatus';
 
 const Tweets = () => {
   const [loading, setLoading] = useState(true);
@@ -43,12 +44,7 @@ const Tweets = () => {
     setUserStatus(updateUsers);
   }, [users]);
 
-  const filteredUsers = userStatus.filter(user => {
-    if (filter === 'all') return true;
-    if (filter === 'follow' && !user.isFollowing) return true;
-    if (filter === 'following' && user.isFollowing) return true;
-    return false;
-  });
+  const filteredUsers = filtredUsersByStatus(userStatus, filter);
 
   return (
     <>
