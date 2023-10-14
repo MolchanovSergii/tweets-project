@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/tweets-project/static/css/main.b5320759.css",
-    "main.js": "/tweets-project/static/js/main.2ab17c4d.js",
+    "main.js": "/tweets-project/static/js/main.d2ba428e.js",
     "static/media/background_image.png": "/tweets-project/static/media/background_image.db6709e825b888acd80e.png",
     "index.html": "/tweets-project/index.html",
     "main.b5320759.css.map": "/tweets-project/static/css/main.b5320759.css.map",
-    "main.2ab17c4d.js.map": "/tweets-project/static/js/main.2ab17c4d.js.map"
+    "main.d2ba428e.js.map": "/tweets-project/static/js/main.d2ba428e.js.map"
   },
   "entrypoints": [
     "static/css/main.b5320759.css",
-    "static/js/main.2ab17c4d.js"
+    "static/js/main.d2ba428e.js"
   ]
 }
