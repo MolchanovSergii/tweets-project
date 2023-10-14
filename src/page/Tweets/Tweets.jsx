@@ -60,7 +60,12 @@ const Tweets = () => {
           </Select>
           <UsersContainer>
             {filteredUsers.map(user => (
-              <UserCard key={user.id} user={user} />
+              <UserCard
+                key={user.id}
+                user={user}
+                users={userStatus}
+                setUserStatus={setUserStatus}
+              />
             ))}
           </UsersContainer>
           <Button onClick={() => setPage(prevPage => prevPage + 1)}>

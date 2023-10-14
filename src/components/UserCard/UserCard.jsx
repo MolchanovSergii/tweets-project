@@ -19,7 +19,7 @@ import {
   setToLocalStorage,
 } from 'components/helpers/helpers';
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, users, setUserStatus }) => {
   const [isFollowing, setIsFollowing] = useState(
     getFromLocalStorage(`isFollowing_${user.id}`, false)
   );
@@ -35,6 +35,14 @@ const UserCard = ({ user }) => {
   const handleFollowClick = () => {
     setIsFollowing(prev => !prev);
     setFollowersCount(prev => (isFollowing ? prev - 1 : prev + 1));
+
+    const updatedUsers = users.map(u => {
+      if (u.id === user.id) {
+        return { ...u, isFollowing: !isFollowing };
+      }
+      return u;
+    });
+    setUserStatus(updatedUsers);
   };
 
   const buttonColor = isFollowing
