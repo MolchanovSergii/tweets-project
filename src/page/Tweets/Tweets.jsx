@@ -4,12 +4,18 @@ import { fetchUsers } from 'api/api';
 
 import UserCard from 'components/UserCard/UserCard';
 import Loader from 'components/Loader/Loader';
-import { Button, UsersContainer, StyledLink } from './TweetsStyled';
+import { Button, UsersContainer, StyledLink, Select } from './TweetsStyled';
 
 const Tweets = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState('all');
+  const [userStatus, setUserStatus] = useState([]);
+
+  const handleFilterChange = e => {
+    setFilter(e.target.value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +33,23 @@ const Tweets = () => {
     fetchData();
   }, [page]);
 
+  useEffect(() => {
+    const updateUsers = users.map(user => {
+      const isFollowing =
+        localStorage.getItem(`isFollowing_${user.id}`) === 'true';
+      return { ...user, isFollowing };
+    });
+
+    setUserStatus(updateUsers);
+  }, [users]);
+
+  const filteredUsers = userStatus.filter(user => {
+    if (filter === 'all') return true;
+    if (filter === 'follow' && !user.isFollowing) return true;
+    if (filter === 'following' && user.isFollowing) return true;
+    return false;
+  });
+
   return (
     <>
       {loading ? (
@@ -34,8 +57,13 @@ const Tweets = () => {
       ) : (
         <>
           <StyledLink to="/">BACK</StyledLink>
+          <Select onChange={handleFilterChange}>
+            <option value="all">SHOW ALL</option>
+            <option value="follow">FOLLOW</option>
+            <option value="following">FOLLOWING</option>
+          </Select>
           <UsersContainer>
-            {users.map(user => (
+            {filteredUsers.map(user => (
               <UserCard key={user.id} user={user} />
             ))}
           </UsersContainer>

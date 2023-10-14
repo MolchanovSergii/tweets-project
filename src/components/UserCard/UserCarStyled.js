@@ -100,4 +100,16 @@ export const Button = styled.button`
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
+  &:hover {
+    background-color: rgba(92, 211, 168, 1);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(174, 123, 227, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 `;
